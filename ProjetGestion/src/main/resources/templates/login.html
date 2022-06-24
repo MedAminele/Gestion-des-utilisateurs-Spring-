@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous" />
+
+
+
+<link rel="stylesheet" href="Z&M.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<div class="container-fluid">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link active" th:href="@{/}">Accueil</a>
+				</li>
+				<li class="nav-item"><a class="nav-link active"
+					th:href="@{/users}">Liste des Utilisateurs</a></li>
+				<li class="nav-item"><a class="nav-link active"
+					th:href="@{/register}">Inscription</a></li>
+				<li class="nav-item"><a class="nav-link active"
+					th:href="@{/doLogin}">Authentication</a></li>
+
+				<!--             <li class="nav-item dropdown"> -->
+				<!--                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"> -->
+				<!--                     User -->
+				<!--                 </a> -->
+				<!--                 <ul class="dropdown-menu"> -->
+				<!--                     <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Nouveau </a></li> -->
+				<!--                     <li><a class="dropdown-item" th:href="@{/user/index}">Chercher </a></li> -->
+
+				<!--                 </ul> -->
+				<!--             </li> -->
+			</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+					<a class="nav-link dropdown-toggle" href="#" role="button"
+					data-bs-toggle="dropdown"> <span sec:authentication="name"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" th:href="@{/logout}">Logout
+						</a></li>
+
+
+					</ul>
+				</li>
+				<li class="nav-item"><a class="nav-link"
+					sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div>
+		<center>
+			<h1>S'authentifier</h1>
+		</center>
+	</div>
+	<div class="container-fluid text-center">
+
+		<form th:action="@{/login}" method="post"
+			style="max-width: 350px; margin: 0 auto;">
+
+			<div th:if="${param.error}">
+				<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+			</div>
+
+			<div th:if="${param.logout}">
+				<p class="text-warning">You have been logged out.</p>
+			</div>
+
+			<div class="border border-secondary p-3 rounded">
+
+				<p>
+					<input type="email" name="email" class="form-control"
+						placeholder="E-mail" required autofocus />
+				</p>
+				<p>
+					<input type="password" name="password" class="form-control"
+						placeholder="Mot de passe" required />
+				</p>
+				<p>
+					<input type="checkbox" name="remember-me" />&nbsp;Remember Me
+				</p>
+				<p>
+				<div>
+					<button type="submit" class="btn btn-primary">s'authentifier</button>
+				</div>
+				</p>
+			</div>
+		</form>
+	</div>
+	<footer>
+		<div class="footer-content">
+			<h3>DSI MEN-2022</h3>
+			<u1 class="socials">
+			<li><a target="_blank" href="#"><i class="fa fa-facebook"></i></a></li>
+			<li><a target="_blank" href="mailto:contact@men.gov.ma"><i
+					class="fa fa-google-plus"></i></a></li>
+			<li><a target="_blank" href="https://twitter.com/maroceducation"><i
+					class="fa fa-twitter"></i></a></li>
+			<li><a target="_blank" href="#"><i class="fa fa-youtube"></i></a></li>
+			<li><a target="_blank"
+				href="https://www.linkedin.com/company/ministry-of-education-morocco/"
+				bla><i class="fa fa-linkedin-square"></i></a></li>
+			</u1>
+		</div>
+		<div class="footer-bottom">
+			<p>
+				copyright &copy;2022 Royaume du Maroc - Ministère de l’Education
+				Nationale DSI.<span>AHAJI ZAKARIAE</span> & <span>LEMMAKNI
+					MOHAMED AMINE</span>
+			</p>
+
+		</div>
+
+
+	</footer>
+
+</body>
+</html>
+</body>
+</html>
