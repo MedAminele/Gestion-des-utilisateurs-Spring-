@@ -23,8 +23,14 @@ public class User {
      
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
+    @Column(name = "user_type", nullable = false, length = 20)
+    private String type;
 
-    //get set
+    
+
+	
+
+	//get set
 	public Long getId() {
 		return id;
 	}
@@ -64,11 +70,19 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + "]";
+				+ ", lastName=" + lastName + ", type=" + type + "]";
 	}
 	
 	

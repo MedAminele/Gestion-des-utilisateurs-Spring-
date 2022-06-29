@@ -1,127 +1,132 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="template">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="template">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Modification</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous" />
+<meta charset="ISO-8859-1">
+<title>Modification</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous" />
 
-        
-        <link rel="stylesheet" href="Z&M.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="Z&M.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <div class="container-fluid">
-        <ul class="navbar-nav">
-             <li class="nav-item">
-         
-                <a class="nav-link active" th:href="@{/}">Accueil</a>
-            </li>
-            <li class="nav-item">
-                   <a class="nav-link active" th:href="@{/users}">Liste des Utilisateurs</a>
-        
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" th:href="@{/register}">Inscription</a>
-        
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" th:href="@{/doLogin}">Authentication</a>
-            </li>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<div class="container-fluid">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link active" th:href="@{/}">Accueil</a>
+				</li>
+				<li class="nav-item"><a class="nav-link active"
+					th:href="@{/users}">Liste des Utilisateurs</a></li>
+				<li class="nav-item"><a class="nav-link active"
+					th:href="@{/register}">Inscription</a></li>
+				<li class="nav-item"><a class="nav-link active"
+					th:href="@{/login}">Authentication</a></li>
 
-<!--             <li class="nav-item dropdown"> -->
-<!--                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"> -->
-<!--                     User -->
-<!--                 </a> -->
-<!--                 <ul class="dropdown-menu"> -->
-<!--                     <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Nouveau </a></li> -->
-<!--                     <li><a class="dropdown-item" th:href="@{/user/index}">Chercher </a></li> -->
+				<!--             <li class="nav-item dropdown"> -->
+				<!--                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"> -->
+				<!--                     User -->
+				<!--                 </a> -->
+				<!--                 <ul class="dropdown-menu"> -->
+				<!--                     <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/formPatients}">Nouveau </a></li> -->
+				<!--                     <li><a class="dropdown-item" th:href="@{/user/index}">Chercher </a></li> -->
 
-<!--                 </ul> -->
-<!--             </li> -->
-            </ul>
-        <ul class="navbar-nav" >
-            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                    <span sec:authentication="name"></span>
-                </a>
-                <ul class="dropdown-menu" >
-                    <li><a class="dropdown-item" th:href="@{/logout}">Logout </a></li>
+				<!--                 </ul> -->
+				<!--             </li> -->
+			</ul>
+			<ul class="navbar-nav">
+
+				            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+				              <li>
+					<form th:action="@{/logout}" method="post">
+						     <input type="submit" value="se déconnecter" />
+					</form>
+				</li>
+
+			</ul>
+		</div>
+	</nav>
+	<div class="col-md-6 offset-3">
+		<form method="post" th:action="@{/save}">
+			<div>
+				<label for="id">ID :</label> <label th:text="${user.id}"></label> <input
+					id="id" class="form-control" type="hidden" name="id"
+					th:value="${user.id}">
+
+			</div>
+			<div>
+				<label for="email">Email</label> <input id="email"
+					class="form-control" type="text" name="email"
+					th:value="${user.email}"> <span class="text-danger"
+					th:errors="${user.email}"></span>
+			</div>
+			<div>
+				<label>Mot de passe</label> <input class="form-control"
+					type="password" name="password" th:value="${user.password}">
+
+				<span class="text-danger" th:errors="${user.password}"></span>
+			</div>
+			<div>
+				<label>Type</label> <input class="form-control"
+					type="text" name="type" th:value="${user.type}">
+
+				<span class="text-danger" th:errors="${user.type}"></span>
+			</div>
+			<div>
+				<label>Prenom</label> <input class="form-control" type="text"
+					name="firstName" th:value="${user.firstName}"> <span
+					class="text-danger" th:errors="${user.firstName}"></span>
+			</div>
+			<div>
+				<label>Nom</label> <input class="form-control" type="text"
+					name="lastName" th:value="${user.lastName}"> <span
+					class="text-danger" th:errors="${user.lastName}"></span>
+			</div>
+			<div>
+				<label> </label>
+				<button type="submit" class="btn btn-primary t-3">Enregistrer</button>
+			</div>
+		</form>
+	</div>
+
+	<footer>
+		<div class="footer-content">
+			<h3>DSI MEN-2022</h3>
+			<u1 class="socials">
+			<li><a target="_blank" href="#"><i class="fa fa-facebook"></i></a></li>
+			<li><a target="_blank" href="mailto:contact@men.gov.ma"><i
+					class="fa fa-google-plus"></i></a></li>
+			<li><a target="_blank" href="https://twitter.com/maroceducation"><i
+					class="fa fa-twitter"></i></a></li>
+			<li><a target="_blank" href="#"><i class="fa fa-youtube"></i></a></li>
+			<li><a target="_blank"
+				href="https://www.linkedin.com/company/ministry-of-education-morocco/"
+				bla><i class="fa fa-linkedin-square"></i></a></li>
+			</u1>
+		</div>
+		<div class="footer-bottom">
+			<p>
+				copyright &copy;2022 Royaume du Maroc - Ministère de l’Education
+				Nationale DSI. designed by <span>AHAJI ZAKARIAE</span> & <span>LEMMAKNI
+					MOHAMED AMINE</span>
+			</p>
+
+		</div>
 
 
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-    <div class="col-md-6 offset-3" >
-        <form method="post" th:action="@{/save}"> 
-            <div >
-                <label for="id">ID :</label>
-                <label th:text="${user.id}"></label>
-                <input id="id" class="form-control" type="hidden" name="id" th:value="${user.id}">
-
-            </div>
-            <div >
-                <label for="email">Email</label>
-                <input id="email" class="form-control" type="text" name="email" th:value="${user.email}">
-
-                <span class="text-danger" th:errors="${user.email}"></span>
-            </div>
-            <div >
-                <label >Mot de passe</label>
-                <input  class="form-control" type="password" name="password" th:value="${user.password}" >
-
-                <span class="text-danger" th:errors="${user.password}"></span>
-            </div>
-             <div >
-                <label >Prenom</label>
-                <input  class="form-control" type="text" name="firstName" th:value="${user.firstName}">
-
-                <span class="text-danger" th:errors="${user.firstName}"></span>
-            </div>
-            <div >
-                <label>Nom</label>
-                <input class="form-control" type="text" name="lastName" th:value="${user.lastName}">
-
-                <span class="text-danger" th:errors="${user.lastName}"></span>
-            </div>
-            <div >
-            <label> </label>
-            <button type="submit" class="btn btn-primary t-3">Enregistrer</button>
-            </div>
-        </form>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <h3>DSI MEN-2022</h3>
-            <u1 class="socials">
-                <li><a target="_blank" href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a target="_blank" href="mailto:contact@men.gov.ma"><i class="fa fa-google-plus"></i></a></li>
-                <li><a target="_blank" href="https://twitter.com/maroceducation"><i class="fa fa-twitter"></i></a></li>
-                <li><a target="_blank" href="#"><i class="fa fa-youtube"></i></a></li>
-                <li><a target="_blank" href="https://www.linkedin.com/company/ministry-of-education-morocco/" bla><i class="fa fa-linkedin-square"></i></a></li>
-            </u1>
-        </div>
-        <div class="footer-bottom">
-            <p> copyright &copy;2022 Royaume du Maroc - Ministère de l’Education Nationale DSI. designed by <span>AHAJI ZAKARIAE</span> & <span>LEMMAKNI MOHAMED AMINE</span></p>
-            
-        </div>
-            
-        
-    </footer>
+	</footer>
 </body>
 </html>
 

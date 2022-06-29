@@ -9,11 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
  
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+
  
     @Bean
     public UserDetailsService userDetailsService() {
@@ -41,11 +44,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+    	 http.authorizeRequests()
+    	     .antMatchers("/", "/register").permitAll()
             .anyRequest().authenticated()
             .and()
-            .formLogin().permitAll()
+            .formLogin().loginPage("/login")
+            .permitAll()
+           .and()  
+            .rememberMe()  
+            .key("rem-me-key")  
+            .rememberMeParameter("remember") // it is name of checkbox at login page  
+             
+            .tokenValiditySeconds(100) // remember for number of seconds  
             .and()
             .logout().permitAll();
+    	  http.exceptionHandling().accessDeniedPage("/403");
+        
     }
+    
+
 }

@@ -59,6 +59,4 @@ public class Admin {
 	
     
  
-    // getters and setters are not shown for brevity
- 
 }
